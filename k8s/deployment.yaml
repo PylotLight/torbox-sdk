@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: torbox-sdk
+  labels:
+    app: torbox-sdk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: torbox-sdk
+  template:
+    metadata:
+      labels:
+        app: torbox-sdk
+    spec:
+      volumes:
+      - name: input-volume
+        hostPath:
+          path: /Data/files/newTorBox/
+          type: DirectoryOrCreate
+      - name: output-volume
+        hostPath:
+          path: /Data/files/downloads
+          type: DirectoryOrCreate
+      containers:
+      - name: torbox-sdk
+        image: torbox-sdk:latest
+        imagePullPolicy: Never
+        env:
+        - name: TORBOX_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: pylot-secrets
+              key: TORBOX_API_KEY
+        - name: WATCH_PATHS
+          value: "/app/input"
+        volumeMounts:
+        - name: input-volume
+          mountPath: /app/input
+        - name: output-volume
+          mountPath: /app/downloads
