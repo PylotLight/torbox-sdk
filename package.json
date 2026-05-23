@@ -1,12 +1,17 @@
 {
   "name": "torbox-sdk",
-  "module": "index.ts",
+  "version": "0.1.0",
   "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --watch run src/index.ts",
+    "test": "bun test",
+    "typecheck": "bun x tsc --noEmit"
   },
-  "peerDependencies": {
-    "typescript": "^5"
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
   }
 }
